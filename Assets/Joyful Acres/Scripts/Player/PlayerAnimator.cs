@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    [Header(" Elements ")]
     [SerializeField] private Animator _animator;
+
+    [Header(" Settings ")]
+    [SerializeField] private float _moveSpeedMultiplier;
 
     private void Start()
     {
@@ -19,7 +23,9 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (moveVector.magnitude > 0)
         {
+            _animator.SetFloat("moveSpeed", moveVector.magnitude * _moveSpeedMultiplier);
             PlayRunAnimation();
+            _animator.transform.forward = moveVector.normalized;
         }
         else
         {
@@ -35,5 +41,9 @@ public class PlayerAnimator : MonoBehaviour
     private void PlayRunAnimation()
     {
         _animator.Play("Run");
+    }
+    private void PlaySowAnimation()
+    {
+        _animator.Play("Sow");
     }
 }

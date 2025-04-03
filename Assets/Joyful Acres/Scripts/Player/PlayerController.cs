@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private MobileJoystick _mobileJoystick;
-    [SerializeField] private PlayerAnimator _playerAnimator;
 
+    private PlayerAnimator _playerAnimator;
     private CharacterController _characterController;
 
     [Header(" Settings ")]
@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _playerAnimator = GetComponent<PlayerAnimator>();
         _characterController = GetComponent<CharacterController>();
     }
     private void Update()
