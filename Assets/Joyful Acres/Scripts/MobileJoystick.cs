@@ -12,7 +12,7 @@ public class MobileJoystick : MonoBehaviour
     [Header(" Settings ")]
     [SerializeField] private float _moveFactor;
     private Vector3 _move;
-    private Vector3 clickedPosition;
+    private Vector3 _clickedPosition;
     private bool _canControl;
 
     private void Start()
@@ -31,7 +31,7 @@ public class MobileJoystick : MonoBehaviour
     private void ControlJoystick()
     {
         var currentPosition = Input.mousePosition;
-        var direction = currentPosition - clickedPosition;
+        var direction = currentPosition - _clickedPosition;
 
         float moveMagnitude = direction.magnitude * _moveFactor / Screen.width;
         //Chia cho Screen.width trong trường hợp này là để chuẩn hóa giá trị di chuyển của joystick,
@@ -40,7 +40,7 @@ public class MobileJoystick : MonoBehaviour
         moveMagnitude = Mathf.Min(moveMagnitude, _joystickOutline.rect.width / 2);
 
         _move = direction.normalized * moveMagnitude;
-        Vector3 targetPos = clickedPosition + _move;
+        Vector3 targetPos = _clickedPosition + _move;
 
         _joystickKnob.position = targetPos;
 
@@ -53,8 +53,8 @@ public class MobileJoystick : MonoBehaviour
 
     public void ClickedOnJoystickZoneCallback()
     {
-         clickedPosition = Input.mousePosition;
-        _joystickOutline.position = clickedPosition;
+         _clickedPosition = Input.mousePosition;
+        _joystickOutline.position = _clickedPosition;
         ShowJoystick();
     }
     private void ShowJoystick()

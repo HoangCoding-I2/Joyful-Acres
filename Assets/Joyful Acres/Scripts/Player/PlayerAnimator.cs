@@ -11,14 +11,7 @@ public class PlayerAnimator : MonoBehaviour
     [Header(" Settings ")]
     [SerializeField] private float _moveSpeedMultiplier;
 
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        
-    }
+
     public void ManageAnimations(Vector3 moveVector)
     {
         if (moveVector.magnitude > 0)
