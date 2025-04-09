@@ -7,5 +7,4 @@ public class CropDataSO : ScriptableObject
 {
     [Header(" Settings ")]
     public Crop CropPrefab;
-
 }

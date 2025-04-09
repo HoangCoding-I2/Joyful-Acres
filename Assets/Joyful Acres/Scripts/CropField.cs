@@ -11,11 +11,16 @@ public class CropField : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] private CropDataSO _cropDataSO;
+    private TileFieldState _state;
     private int _tilesSown;
+
+    [Header(" Actions ")]
+    public static Action<CropField> OnFullSown;
+
     private void Start()
     {
+        _state = TileFieldState.Empty;
         StoreTiles();
-        
     }
     private void Update()
     {
@@ -42,7 +47,6 @@ public class CropField : MonoBehaviour
             {
                 continue;
             }
-
             Sow(closestCropTile);
         }
     }
@@ -59,9 +63,14 @@ public class CropField : MonoBehaviour
 
     private void FieldFullySown()
     {
-        Debug.Log("Field Fully Sown");
+        _state = TileFieldState.Sown;
+        OnFullSown?.Invoke(this);
     }
 
+    public bool IsEmpty()
+    {
+        return _state == TileFieldState.Empty;
+    }
     private CropTile GetClosestCropTile(Vector3 seedPosition)
     {
         float minDistance = 1000;

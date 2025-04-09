@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum TileFieldState { Empty, Sown, Watered}
 
 public class CropTile : MonoBehaviour
 {
-    public enum State { Empty, Sown, Watered}
-    private State _state;
+    private TileFieldState _state;
 
     [Header(" Elements ")]
     [SerializeField] private Transform _cropParent;
     private void Start()
     {
-        _state = State.Empty;
+        _state = TileFieldState.Empty;
     }
     public bool IsEmpty()
     {
-        return _state == State.Empty;
+        return _state == TileFieldState.Empty;
     }
     public void Sow(CropDataSO cropDataSO)
     {
-        _state = State.Sown;
+        _state = TileFieldState.Sown;
         Crop crop = Instantiate(cropDataSO.CropPrefab, transform.position, Quaternion.identity, _cropParent);
     }
 }
