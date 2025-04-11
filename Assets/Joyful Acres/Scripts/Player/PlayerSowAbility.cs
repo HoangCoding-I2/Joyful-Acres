@@ -7,6 +7,7 @@ public class PlayerSowAbility : MonoBehaviour
 {
     [Header(" Elements ")]
     private PlayerAnimator _playerAnimator;
+    private PlayerToolSelector _playerToolSelector;
 
     [Header(" Settings ")]
     private CropField _currentCropField;
@@ -14,16 +15,28 @@ public class PlayerSowAbility : MonoBehaviour
     private void Start()
     {
         _playerAnimator = GetComponent<PlayerAnimator>();
+        _playerToolSelector = GetComponent<PlayerToolSelector>();
+
         SeedParticles.OnSeedsCollided += SeedsColliedCallback;
         CropField.OnFullSown += CropFieldFullySownCallback;
+        _playerToolSelector.OnToolSelected += ToolSelectedCallback;
     }
+
 
     private void OnDestroy()
     {
         SeedParticles.OnSeedsCollided -= SeedsColliedCallback;
         CropField.OnFullSown -= CropFieldFullySownCallback;
+        _playerToolSelector.OnToolSelected -= ToolSelectedCallback;
     }
 
+    private void ToolSelectedCallback(PlayerToolSelector.Tool selectedTool)
+    {
+        if (!_playerToolSelector.CanSow())
+        {
+            _playerAnimator.StopSowAnimation();
+        }
+    }
     private void CropFieldFullySownCallback(CropField cropField)
     {
         if (cropField == _currentCropField)
@@ -45,10 +58,24 @@ public class PlayerSowAbility : MonoBehaviour
     {
         if(other.CompareTag("CropField") && other.GetComponent<CropField>().IsEmpty())
         {
-            _playerAnimator.PlaySowAnimation();
             _currentCropField = other.GetComponent<CropField>();
+            EnteredCropField(_currentCropField);
         }
         
+    }
+    private void EnteredCropField(CropField cropField)
+    {
+        if (_playerToolSelector.CanSow())
+        {
+            _playerAnimator.PlaySowAnimation();
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("CropField") && other.GetComponent<CropField>().IsEmpty() )
+        {
+            EnteredCropField(other.GetComponent<CropField>());
+        }
     }
     private void OnTriggerExit(Collider other)
     {

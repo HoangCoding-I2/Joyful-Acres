@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cropParent: {fileID: 5003496526866483801}
+  _tileRenderer: {fileID: 6660314131529641132}
 --- !u!1 &8335506114874404251
 GameObject:
   m_ObjectHideFlags: 0

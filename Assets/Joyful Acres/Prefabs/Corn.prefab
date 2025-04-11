@@ -129,3 +129,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c86b619d40d141b34de78c6d021db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cropRenderer: {fileID: 1086772771874051752}
